@@ -1,0 +1,33 @@
+# Archivos de sistema y carpetas
+.DS_Store
+Thumbs.db
+
+# Archivos de configuración y de sistema
+*.log
+*.env
+*.pyc
+__pycache__/
+.vscode/
+.idea/
+*.iml
+
+# Archivos comprimidos
+*.zip
+
+# Archivos de compilación
+build/
+dist/
+*.o
+*.class
+
+# Dependencias específicas por lenguaje (ejemplo: Python y Node.js)
+node_modules/
+venv/
+.env
+*.egg-info/
+
+# Archivos temporales
+*.tmp
+*.swp
+*.bak
+*.swo
