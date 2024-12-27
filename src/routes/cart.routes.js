@@ -1,8 +1,8 @@
-// backend/src/routes/cart.routes.js
 const express = require('express');
 const router = express.Router();
 const Cart = require('../models/Cart');
 const { authMiddleware } = require('../middlewares/auth.middleware');
+const { validateCartItem } = require('../middlewares/validation.middleware');
 
 // Obtener el carrito del usuario
 router.get('/', authMiddleware, async (req, res) => {
@@ -39,7 +39,7 @@ router.get('/', authMiddleware, async (req, res) => {
 });
 
 // Agregar item al carrito
-router.post('/items', authMiddleware, async (req, res) => {
+router.post('/items', authMiddleware, validateCartItem, async (req, res) => {
     try {
         const { productId, quantity } = req.body;
 
@@ -85,7 +85,7 @@ router.post('/items', authMiddleware, async (req, res) => {
 
 
 // backend/src/routes/cart.routes.js
-router.put('/items/:itemId', authMiddleware, async (req, res) => {
+router.put('/items/:itemId', authMiddleware, validateCartItem, async (req, res) => {
     try {
         const quantity = Number(req.body.quantity); // Asegurarnos de que es un número
         

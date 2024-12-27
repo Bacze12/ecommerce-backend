@@ -1,22 +1,14 @@
-// src/routes/auth.routes.js
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
+const { registerValidationRules, loginValidationRules, validateRegister, validateLogin } = require('../middlewares/validation.middleware');
 
 // Registro
-router.post('/register', async (req, res, next) => {
+router.post('/register', registerValidationRules(), validateRegister, async (req, res, next) => {
     try {
         const { name, email, password } = req.body;
-
-        // Validaciones básicas
-        if (!name || !email || !password) {
-            return res.status(400).json({
-                success: false,
-                message: 'Por favor, proporciona todos los campos requeridos'
-            });
-        }
 
         // Verificar si el usuario ya existe
         const existingUser = await User.findOne({ email });
@@ -59,17 +51,9 @@ router.post('/register', async (req, res, next) => {
 });
 
 // Login
-router.post('/login', async (req, res, next) => {
+router.post('/login', loginValidationRules(), validateLogin, async (req, res, next) => {
     try {
         const { email, password } = req.body;
-
-        // Validaciones básicas
-        if (!email || !password) {
-            return res.status(400).json({
-                success: false,
-                message: 'Por favor, proporciona email y contraseña'
-            });
-        }
 
         // Buscar usuario
         const user = await User.findOne({ email });
