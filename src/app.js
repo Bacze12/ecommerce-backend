@@ -1,9 +1,10 @@
-// src/app.js
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
+const helmet = require('helmet');
+const mongoSanitize = require('express-mongo-sanitize');
 const connectDB = require('./config/database');
 const { errorHandler, notFound } = require('./middlewares/error.middleware');
 
@@ -45,6 +46,8 @@ app.use(cors({
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(helmet());
+app.use(mongoSanitize());
 
 // Aplicar rate limiting solo a rutas de autenticación
 app.use('/api/auth', limiter);
