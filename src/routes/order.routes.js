@@ -4,12 +4,12 @@ const Order = require('../models/Order');
 const { authMiddleware, isAdmin } = require('../middlewares/auth.middleware');
 const { generateToken } = require('../service/tokenService');
 const Cart = require('../models/Cart'); // Importa el modelo del carrito
-
+const { validateOrder } = require('../middlewares/validation.middleware');
 
 const POS_MODULE_ID = process.env.POS_MODULE_ID || 'ID_REAL_DEL_PRODUCTO_POS';
 
 // Crear nueva orden
-router.post('/', authMiddleware, async (req, res) => {
+router.post('/', authMiddleware, validateOrder, async (req, res) => {
     try {
         const orderData = {
             user: req.user._id,
@@ -76,11 +76,6 @@ router.post('/', authMiddleware, async (req, res) => {
         });
     }
 });
-
-
-
-
-
 
 // Obtener órdenes del usuario
 router.get('/my-orders', authMiddleware, async (req, res) => {
