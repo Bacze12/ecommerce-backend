@@ -16,6 +16,7 @@ const cartRoutes = require('./routes/cart.routes');
 const orderRoutes = require('./routes/order.routes');
 const generateToken  = require('./service/tokenService');
 const categoriesRoutes = require('./routes/category.routes');
+const modulo = require('./routes/moduleRoutes');
 const   router = express.Router();
 
 const app = express();
@@ -59,6 +60,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/orders', orderRoutes);
+app.use('/api/module', modulo);
 
 // Manejo de errores
 app.use(notFound);
